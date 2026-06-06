@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Delete URL - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:500px;">
+    <div class="card" style="text-align:center; padding:2.5rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">🗑️</div>
+        <h2 style="margin-bottom:0.5rem;">Delete Short URL?</h2>
+        <p style="color:var(--text-light); margin-bottom:0.5rem;">This action cannot be undone.</p>
+        <p style="margin-bottom:2rem;">
+            <strong>{{ url_obj.short_code }}</strong> &rarr; 
+            <span style="color:var(--text-light); font-size:0.85rem;">{{ url_obj.original_url|truncatechars:60 }}</span>
+        </p>
+        <form method="post" style="display:flex; gap:1rem; justify-content:center;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

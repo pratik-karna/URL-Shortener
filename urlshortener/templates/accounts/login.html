@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Login - TrimLink{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Login to manage your short URLs.</p>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="form-error">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:0.5rem;">Login</button>
+        </form>
+        <p style="text-align:center; margin-top:1.5rem; font-size:0.9rem; color:var(--text-light);">
+            Don't have an account? <a href="{% url 'register' %}" style="color:var(--primary); font-weight:600;">Register</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

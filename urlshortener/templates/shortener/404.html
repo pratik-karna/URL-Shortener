@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}404 - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:500px; padding-top:4rem;">
+    <div class="card" style="text-align:center; padding:3rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">🔍</div>
+        <h2>Short URL Not Found</h2>
+        <p style="color:var(--text-light);">This short link doesn't exist.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary" style="margin-top:1.5rem;">Go Home</a>
+    </div>
+</div>
+{% endblock %}

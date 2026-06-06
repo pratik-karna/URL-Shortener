@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - TrimLink{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h1 style="font-size:1.6rem; font-weight:800;">My Dashboard</h1>
+        <a href="{% url 'create_url' %}" class="btn btn-primary">+ Shorten New URL</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ total_urls }}</div>
+            <div class="stat-label">Total URLs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:#06b6d4;">{{ total_clicks }}</div>
+            <div class="stat-label">Total Clicks</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:#10b981;">{{ active_count }}</div>
+            <div class="stat-label">Active Links</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:#f59e0b;">{{ expired_count }}</div>
+            <div class="stat-label">Expired Links</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">🔗 My Short URLs</div>
+        {% if urls %}
+        <div style="overflow-x:auto;">
+        <table class="url-table">
+            <thead>
+                <tr>
+                    <th>Short URL</th>
+                    <th>Original URL</th>
+                    <th>Title</th>
+                    <th>Clicks</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for url in urls %}
+            <tr>
+                <td>
+                    <a href="/{{ url.short_code }}/" class="url-short" target="_blank">{{ request.get_host }}/{{ url.short_code }}/</a>
+                    <br>
+                    <button class="copy-btn" onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/{{ url.short_code }}/', this)" style="margin-top:4px;">📋 Copy</button>
+                </td>
+                <td><div class="url-original" title="{{ url.original_url }}">{{ url.original_url }}</div></td>
+                <td style="font-size:0.85rem;">{{ url.title|default:"-" }}</td>
+                <td>
+                    <span class="badge badge-info">{{ url.click_count }} clicks</span>
+                </td>
+                <td>
+                    {% if not url.is_active %}
+                        <span class="badge badge-danger">Disabled</span>
+                    {% elif url.is_expired %}
+                        <span class="badge badge-warning">Expired</span>
+                    {% else %}
+                        <span class="badge badge-success">Active</span>
+                    {% endif %}
+                </td>
+                <td style="font-size:0.82rem; color:var(--text-light);">{{ url.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <div class="action-btns">
+                        <a href="{% url 'url_analytics' url.pk %}" class="btn btn-outline btn-sm">📊</a>
+                        <a href="{% url 'generate_qr' url.pk %}" class="btn btn-outline btn-sm">📱</a>
+                        <a href="{% url 'edit_url' url.pk %}" class="btn btn-secondary btn-sm">✏️ Edit</a>
+                        <a href="{% url 'delete_url' url.pk %}" class="btn btn-danger btn-sm">🗑️</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">🔗</div>
+            <h3>No URLs yet</h3>
+            <p>Create your first short URL to get started!</p>
+            <a href="{% url 'create_url' %}" class="btn btn-primary" style="margin-top:1rem;">+ Shorten a URL</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

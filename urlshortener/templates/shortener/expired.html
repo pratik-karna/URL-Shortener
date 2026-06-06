@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Link Unavailable - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:500px; padding-top:4rem;">
+    <div class="card" style="text-align:center; padding:3rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">{% if reason == 'expired' %}⏰{% else %}🚫{% endif %}</div>
+        <h2 style="margin-bottom:0.5rem;">{% if reason == 'expired' %}Link Expired{% else %}Link Disabled{% endif %}</h2>
+        <p style="color:var(--text-light);">This link is no longer available.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary" style="margin-top:1.5rem;">Go to Homepage</a>
+    </div>
+</div>
+{% endblock %}

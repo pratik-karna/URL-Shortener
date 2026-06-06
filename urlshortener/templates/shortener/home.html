@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}TrimLink - Shorten URLs Instantly{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>Shorten URLs<br><span>Smarter &amp; Faster</span></h1>
+    <p>Create short, memorable links in seconds. Track clicks, set expiry dates, generate QR codes, and more.</p>
+    <div class="hero-btns">
+        {% if user.is_authenticated %}
+            <a href="{% url 'create_url' %}" class="btn btn-primary btn-lg">Shorten a URL</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">My Dashboard</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started Free</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">Login</a>
+        {% endif %}
+    </div>
+</div>
+<div class="features">
+    <div class="feature-card"><div class="feature-icon">⚡</div><h3>Instant Shortening</h3><p>Generate short links using Base62 encoding.</p></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><h3>Click Analytics</h3><p>Track every click with detailed stats.</p></div>
+    <div class="feature-card"><div class="feature-icon">✏️</div><h3>Custom URLs</h3><p>Create branded short links with your own code.</p></div>
+    <div class="feature-card"><div class="feature-icon">⏰</div><h3>Expiry Control</h3><p>Set expiration times on any link.</p></div>
+    <div class="feature-card"><div class="feature-icon">📱</div><h3>QR Codes</h3><p>Generate downloadable QR codes instantly.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔒</div><h3>Secure</h3><p>Your links are private and only visible to you.</p></div>
+</div>
+{% endblock %}

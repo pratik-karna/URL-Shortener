@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Profile - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:600px;">
+    <h1 style="font-size:1.6rem; font-weight:800; margin-bottom:1.5rem;">👤 Profile</h1>
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header">Account Info</div>
+        <table style="width:100%; border-collapse:collapse;">
+            <tr><td style="padding:0.7rem 0; color:var(--text-light); width:140px;">Username</td><td style="font-weight:600;">{{ user.username }}</td></tr>
+            <tr><td style="padding:0.7rem 0; color:var(--text-light);">Email</td><td>{{ user.email }}</td></tr>
+            <tr><td style="padding:0.7rem 0; color:var(--text-light);">Name</td><td>{{ user.get_full_name|default:"Not set" }}</td></tr>
+            <tr><td style="padding:0.7rem 0; color:var(--text-light);">Joined</td><td>{{ user.date_joined|date:"M d, Y" }}</td></tr>
+        </table>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">{{ total_urls }}</div><div class="stat-label">Total URLs</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:#06b6d4;">{{ total_clicks }}</div><div class="stat-label">Total Clicks</div></div>
+    </div>
+    <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Dashboard</a>
+        <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+    </div>
+</div>
+{% endblock %}

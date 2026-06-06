@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Edit URL - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:600px;">
+    <div style="margin-bottom:1.5rem;">
+        <h1 style="font-size:1.6rem; font-weight:800;">✏️ Edit Short URL</h1>
+        <p style="color:var(--text-light);">Short code: <strong>{{ url_obj.short_code }}</strong></p>
+    </div>
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Original URL *</label>
+                {{ form.original_url }}
+                {% if form.original_url.errors %}<div class="form-error">{{ form.original_url.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Active</label>
+                {{ form.is_active }} Enable / disable this link
+            </div>
+            <div class="form-group">
+                <label class="form-label">New Expiry (hours from now)</label>
+                {{ form.expiry_hours }}
+                <div class="form-help">
+                    Current expiry: {% if url_obj.expires_at %}{{ url_obj.expires_at|date:"M d, Y H:i" }}{% else %}None{% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.clear_expiry }} <label>Remove expiration date</label>
+            </div>
+            <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

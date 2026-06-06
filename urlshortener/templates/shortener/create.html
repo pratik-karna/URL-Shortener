@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Shorten URL - TrimLink{% endblock %}
+{% block content %}
+<div class="container" style="max-width:600px;">
+    <div style="margin-bottom:1.5rem;">
+        <h1 style="font-size:1.6rem; font-weight:800;">✂️ Shorten a URL</h1>
+        <p style="color:var(--text-light);">Fill in the form below to create a short link.</p>
+    </div>
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Original URL *</label>
+                {{ form.original_url }}
+                {% if form.original_url.errors %}<div class="form-error">{{ form.original_url.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Title (optional)</label>
+                {{ form.title }}
+                <div class="form-help">A friendly name to identify this link.</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Custom Short Code (optional)</label>
+                {{ form.custom_short_code }}
+                {% if form.custom_short_code.errors %}<div class="form-error">{{ form.custom_short_code.errors.0 }}</div>{% endif %}
+                <div class="form-help">Leave blank to auto-generate. Use only letters, numbers, hyphens, underscores.</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Expiry (hours, optional)</label>
+                {{ form.expiry_hours }}
+                {% if form.expiry_hours.errors %}<div class="form-error">{{ form.expiry_hours.errors.0 }}</div>{% endif %}
+                <div class="form-help">Leave blank for no expiration. Enter 24 for 1 day, 168 for 1 week, etc.</div>
+            </div>
+            <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                <button type="submit" class="btn btn-primary">✂️ Create Short URL</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
