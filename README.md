@@ -124,4 +124,4 @@ For production deployment, update `settings.py`:
 - Switch to PostgreSQL database
 - Serve static files via Nginx/WhiteNoise
 
-Recommended free hosting: [Railway](https://railway.app) or [Render](https://render.com)
+Recommended free hosting: [Pythonanywhere](https://pythonanywhere.com) or [Render](https://render.com)
